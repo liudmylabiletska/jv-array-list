@@ -82,7 +82,13 @@ public class ArrayList<T> implements List<T> {
 
     private void ensureCapacity() {
         if (size == elements.length) {
+<<<<<<< HEAD
             int newCapacity = (int) (elements.length * GROWTH_FACTOR);
+=======
+            int newCapacity = Math.max(
+                    (int) (elements.length * GROWTH_FACTOR),
+                    elements.length + 1);
+>>>>>>> faa653c (Fix ArrayList implementation)
             Object[] newArray = new Object[newCapacity];
             System.arraycopy(elements, 0, newArray, 0, size);
             elements = newArray;
