@@ -84,9 +84,10 @@ public class ArrayList<T> implements List<T> {
 
     private void ensureCapacity() {
         if (size == elements.length) {
-            int newCapacity = Math.max((int)
-                    (elements.length * GROWTH_FACTOR),
-                    elements.length + 1);
+            int newCapacity = Math.max(
+                    (int) (elements.length * GROWTH_FACTOR),
+                    elements.length + 1
+            );
             Object[] newArray = new Object[newCapacity];
             System.arraycopy(elements, 0, newArray, 0, size);
             elements = newArray;
@@ -95,7 +96,7 @@ public class ArrayList<T> implements List<T> {
 
     private void validateIndex(int index, boolean isAddOperation) {
         if (index < 0 || (!isAddOperation && index >= size) || (isAddOperation && index > size)) {
-            throw new ArrayListIndexOutOfBoundsException("Invalid index: " + index); 
+            throw new ArrayListIndexOutOfBoundsException("Invalid index: " + index);
         }
     }
 }
