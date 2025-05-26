@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final double GROWTH_FACTOR = 1.5;
-
     private Object[] elements;
     private int size;
 
@@ -52,10 +51,12 @@ public class ArrayList<T> implements List<T> {
     public T remove(int index) {
         validateIndex(index, false);
         final T removedElement = (T) elements[index];
-        if (index < size - 1) {
-            System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        }
-        elements[--size] = null; // Запобігання витоку пам'яті
+        System.arraycopy(
+                elements, index + 1,
+                elements, index,
+                size - index - 1
+        );
+        elements[--size] = null;
         return removedElement;
     }
 
@@ -63,7 +64,8 @@ public class ArrayList<T> implements List<T> {
     public T remove(T element) {
         for (int i = 0; i < size; i++) {
             if ((elements[i] == null && element == null)
-                    || (elements[i] != null && elements[i].equals(element))) {
+                    ||
+                    (elements[i] != null && elements[i].equals(element))) {
                 return remove(i);
             }
         }
@@ -82,13 +84,9 @@ public class ArrayList<T> implements List<T> {
 
     private void ensureCapacity() {
         if (size == elements.length) {
-<<<<<<< HEAD
-            int newCapacity = (int) (elements.length * GROWTH_FACTOR);
-=======
-            int newCapacity = Math.max(
-                    (int) (elements.length * GROWTH_FACTOR),
+            int newCapacity = Math.max((int)
+                    (elements.length * GROWTH_FACTOR),
                     elements.length + 1);
->>>>>>> faa653c (Fix ArrayList implementation)
             Object[] newArray = new Object[newCapacity];
             System.arraycopy(elements, 0, newArray, 0, size);
             elements = newArray;
@@ -96,8 +94,11 @@ public class ArrayList<T> implements List<T> {
     }
 
     private void validateIndex(int index, boolean isAddOperation) {
-        if (index < 0 || (isAddOperation && index > size) || (!isAddOperation && index >= size)) {
-            throw new ArrayListIndexOutOfBoundsException("Invalid index: " + index);
+        if (index < 0 || (!isAddOperation && index >= size) || (isAddOperation && index > size)) {
+            throw new ArrayListIndexOutOfBoundsException("Invalid index: " + index); 
         }
     }
 }
+
+
+
