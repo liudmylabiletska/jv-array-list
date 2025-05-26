@@ -8,7 +8,7 @@ public class ArrayList<T> implements List<T> {
     private Object[] elements;
     private int size;
 
-    public ArrayList() {
+    public ArrayList() {// Це динамічний список, який автоматично змінює розмір при досягненні ліміту
         elements = new Object[DEFAULT_CAPACITY];
         size = 0;
     }
@@ -63,9 +63,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public T remove(T element) {
         for (int i = 0; i < size; i++) {
-            if ((elements[i] == null && element == null)
-                    ||
-                    (elements[i] != null && elements[i].equals(element))) {
+            if (elements[i] == element || (elements[i] != null && elements[i].equals(element))) {
                 return remove(i);
             }
         }
@@ -95,7 +93,9 @@ public class ArrayList<T> implements List<T> {
     }
 
     private void validateIndex(int index, boolean isAddOperation) {
-        if (index < 0 || (!isAddOperation && index >= size) || (isAddOperation && index > size)) {
+        boolean isInvalidIndex = index < 0 || index > size || (!isAddOperation && index == size);
+
+        if (isInvalidIndex) {
             throw new ArrayListIndexOutOfBoundsException("Invalid index: " + index);
         }
     }
